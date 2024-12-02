@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Birds on a wire</title>
+  <style>
+
+    body{
+      width: 100vw;
+      height: 100vh;
+      -webkit-user-select: none;
+      -ms-user-select: none; 
+      user-select: none;
+      cursor: pointer;
+    }
+    
+    img{
+      position: absolute;
+      width: 300px;
+    }
+    
+    p{
+      position: absolute;
+      background: white;
+      z-index: 99;
+    }
+
+    #info{
+      width: 20px;
+      height: 20px;
+      border: 1px solid;
+      border-radius: 100px;
+      position: fixed;
+      padding: 10px;
+      margin: 30px;
+      text-align: center;
+    }
+
+    #info:hover{
+      font-style: italic;
+    }
+
+    #popup{
+      display: none;
+      position: fixed;
+      right: 100px;
+      top: 50px;
+      width: 440px;
+      height: 480px;
+      border: 1px solid;
+      background-color: white;
+      z-index: 999;
+      overflow: scroll;
+    }
+
+    #popup p{
+      margin: 20px;
+    }
+
+    .marquee {
+      width: 100vw;
+      position: fixed;
+      bottom: 0px;
+      left: 0px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .marquee span {
+      display: inline-block;
+      animation: scroll 20s linear infinite;
+    }
+
+    @keyframes scroll {
+      0% {transform: translateX(400%);}
+      100% {transform: translateX(-100%);}
+    }
+
+  </style>
+</head>
+<body id="body">
+
+  <img id="img" src="img/1.png"/>
+  <p id="text">We are birds on a wire</p>
+  <div id="info">?</div>
+
+  <div id="popup">
+    <p><i>Birds on a wire - Living Atop Infrastructure</i><br><br>Upon reading <a href="https://rhizome.org/editorial/2015/jul/2/how-see-infrastructure-guide-seven-billion-primate/">‘How to See Infrastructure’</a> and <a href="https://web.archive.org/web/20170708102427/http://seeingnetworks.in/nyc/">‘Networks of New York’</a>, it was very interesting to learn more about the various metal boxes, poles, markings, grates, manholes, etc. that I walk past everyday. Upon learning more about them from this class’s readings, I became interested in all that surrounded these objects, and how we’ve come to exist on top of these structures that support us. For this project, I am specifically interested in the dissonance between what these objects are meant for, and how passer-byers instead choose to use them — possibly unaware or uncaring of what the street object is. Sometimes it seems we are all just birds on wires. <br><br> In my documentation, I focused on looking for examples of such phenomena where we somehow exist on top of these physical structures: people using a fire hydrant as a seat, poles as ‘message boards’ for posters and stickers, etc. These structures exist in our world going largely unnoticed, yet used unconciously in a multitude of ways. The same ways we often <a href="https://youtu.be/Wpzvaqypav8?si=1CWzky75cEg7t9VH&t=658">disregard infrastructure</a> as a whole, we also disregard its physical ‘residue.’<br><br> I attempted to do research on urban/street infrastructure enclosures, but, not surprisingly, not many articles were found — further suggesting our collective overlooking of this topic. However, there was one <a href="https://www.sciencedirect.com/science/article/pii/S2210670721005898">article</a> that discusses ‘urban surfaces’ which “encompasses all the surfaces that characterize physically and morphologically the built environment from the radiative, thermal, and hydrological perspective.” Thinking about the obvious importance of the structural integrity of these urban structures and surfaces — their placement and form have arguably created ‘by-product uses.’ <br><br> CLICK ANYWHERE TO TRAVERSE DOCUMENTATION<br><br></p>
+  </div>
+
+  <div class="marquee">
+  <span>CLICK ANYWHERE TO TRAVERSE DATA</span>
+</div>
+
+
+<script>
+
+  let img = document.getElementById('img');
+  let text = document.getElementById('text');
+  let icon = document.getElementById('info');
+  let popup = document.getElementById('popup');
+  img.style.top = `220px`;
+  img.style.left = `400px`;
+  text.style.top = `150px`;
+  text.style.left = `650px`;
+
+  let popupState = false;
+  document.getElementById("body").addEventListener("click", refresh);
+  icon.addEventListener("click", display);
+
+  function display(){
+    if(popupState == false){
+      popup.style.display = "block";
+      popupState = true;
+    }
+    else if(popupState == true){
+      popup.style.display = "none";
+      popupState = false;
+    }
+  }
+
+  function refresh() {
+    let imgnum = Math.floor(Math.random() * 8);
+    console.log(imgnum);
+
+    // Calculate boundaries for positioning
+    let maxImgX = window.innerWidth - img.offsetWidth;
+    let maxImgY = window.innerHeight - img.offsetHeight;
+    let maxTextX = window.innerWidth - text.offsetWidth;
+    let maxTextY = window.innerHeight - text.offsetHeight;
+
+    // Generate random positions within boundaries
+    let randomImgX = Math.random() * maxImgX;
+    let randomImgY = Math.random() * maxImgY;
+    let randomTextX = Math.random() * maxTextX;
+    let randomTextY = Math.random() * maxTextY;
+
+    img.src = `img/${imgnum}.png`;
+    img.style.top = `${randomImgY}px`;
+    img.style.left = `${randomImgX}px`;
+
+    text.style.top = `${randomTextY}px`;
+    text.style.left = `${randomTextX}px`;
+
+    changeText(imgnum);
+  }
+
+  function changeText(num){
+    if(num == 0){text.innerHTML = "A performer uses a manhole for his bike levitation performance";}
+    else if(num == 1){text.innerHTML = "A man advertises his poster buisness";}
+    else if(num == 2){text.innerHTML = "Citizens discouraged from sitting on this hydrant";}
+    else if(num == 3){text.innerHTML = "RATFEST 2024 is advertised on this pole";}
+    else if(num == 4){text.innerHTML = "A mosaic artist uses this pole as a canvas";}
+    else if(num == 5){text.innerHTML = "This emergency station is used as a community sticker board";}
+    else if(num == 6){text.innerHTML = "Blurry photo of a bird resting on a wire / security camera";}
+    else if(num == 7){text.innerHTML = "Man rests on NY water supply testing site";}
+  }
+
+</script>
+
+</body>
+</html>
